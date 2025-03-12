@@ -44,6 +44,27 @@ namespace EmployeeManagementSystem.DataAccess.Implementations
         {
             try
             {
+                using var dbTransaction = _context.Database.BeginTransaction();
+                try
+                {
+                    var employee1 = new Employee
+                    {
+                        Name = request.Name,
+                        Email = request.Email,
+                        Phone = request.Phone,
+                        Position = request.Position,
+                        DepartmentID = request.DepartmentID,
+                        JoiningDate = request.JoiningDate,
+                        CreatedDate = DateTime.Now
+                    };
+                    _context.Employees.Add(employee1);
+                    await _context.SaveChangesAsync();
+                    await dbTransaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                   await dbTransaction.RollbackAsync();
+                }
                 var employee = new Employee
                 {
                     Name = request.Name,

@@ -106,7 +106,7 @@ namespace EmployeeManagementSystem.DataAccess.Implementations
                 var performanceReview = await _context.PerformanceReviews.FindAsync(id);
                 if (performanceReview == null)
                 {
-                    _logger.LogWarning("Performance review not found with ID: {ReviewID}", id);
+                    _logger.LogWarning($"Performance review not found with ID: {id}");
                     return false;
                 }
 
